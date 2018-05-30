@@ -1,9 +1,10 @@
 [Unit]
 Description=Tableau Silent Install in Docker
-#ConditionPathExists=!/opt/tableau/docker_build/.init-done
+ConditionPathExists=!/opt/tableau/docker_build/.init-done
 
 [Service]
 Type=oneshot
+Environment='LANG=en_US.UTF-8'
 ExecStart=/opt/tableau/docker_build/tableau-init-configure.sh
 RemainAfterExit=True
 

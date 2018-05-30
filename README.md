@@ -1,11 +1,9 @@
-# tableau-server-beta-docker
-Dockerfile for Tableau Server on Linux - Single Node. 
+# tableau-server-docker
+Dockerfile for Tableau Server on Linux (Ubuntu 16.04) - Single Node. 
 
 ## Build
    
-Be sure that your `EDITOR` environment variable is set then simply call `make`:
-
-    make
+docker build 
     
 ## Run image
 
@@ -20,7 +18,7 @@ To connect from a different terminal to the server itself use
 
     make exec
     
-Pro tipp: If you commit the image state after the first execution (tableau configuration and registration) you don't
+Pro tip: If you commit the image state after the first execution (tableau configuration and registration) you don't
 have to wait minutes next time.
     
 ## Author
