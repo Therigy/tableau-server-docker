@@ -1,41 +1,34 @@
 # tableau-server-docker
-Dockerfile for Tableau Server on Linux (Ubuntu 16.04) - Single Node. 
+Dockerfile for Tableau Server on Linux (Ubuntu 16.04) - Single Node.
+
+This project is a fork of @tfoldi original [repository](https://github.com/tfoldi/tableau-server-docker) for tableau with some major enhancements to get tableau to run correctly as a daemon. Also including a docker-compose file for easily building and running.
+
+## System Dependencies
+
+- Docker >= 17.06
+- docker-compose >= 1.14.0
 
 ## Build
    
-docker build 
+`docker-compose build`
     
-## Run image
+## Run
 
-To boot (run) Tableau Server container simply execute:
-
-    make run
+`docker-compose up -d`
 
 It will call a `systemd` `/sbin/init` on the image and configure, register and start tableau server
 on the first start.
-
-To connect from a different terminal to the server itself use
-
-    make exec
     
 Pro tip: If you commit the image state after the first execution (tableau configuration and registration) you don't
 have to wait minutes next time.
+
+## Known Issues
+
+Data persistence with the named volume persists the data associated with original container deployed but if you recreate your compose stack utilizing the same named volume the container crashes.
     
 ## Author
 
-These ten lines of code done by me, [@tfoldi](https://twitter.com/tfoldi)
+Authors: [@tfoldi](https://twitter.com/tfoldi)
+         [@antoniomercado](https://github.com/antoniomercado)
 
 
-## Install Demo
-[Console Video](https://asciinema.org/a/oJ7tTN0URdtF9UqpCRRGJzKvT/embed?)
-    
-## Blog from tfoldi
-[Blog](https://databoss.starschema.net/tableau-server-linux-docker-container/)
-
-## Tableau docs
-
-- [Introducing Tableau Server on Linux](https://onlinehelp.tableau.com/current/server-linux/en-us/release_notes_linux.htm)
-
-- [Whitepaper Tableau for the enterprise](https://www.tableau.com/sites/default/files/whitepapers/whitepaper_tableau-for-the-enterprise_0.pdf)
-
-- [Online Help](http://onlinehelp.tableau.com/v10.5/pro/desktop/en-us/help.htm)

@@ -1,8 +1,6 @@
 FROM ubuntu:16.04
 
 ENV container docker
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
 
 # Don't start any optional services except for the few we need.
 RUN find /etc/systemd/system \

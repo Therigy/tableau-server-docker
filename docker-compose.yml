@@ -1,0 +1,31 @@
+version: '2'
+volumes:
+  tableau:
+    driver: local
+services:
+  setup-systemd:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - /:/host
+    tty: true
+    command:
+      - setup-systemd
+  tableau:
+    privileged: true
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - tableau:/var/opt/tableau
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /dev/shm:/dev/shm
+      - /mnt/tableau/run:/run
+      - /tmp:/tmp
+    tty: true
+    links:
+      - setup-systemd
