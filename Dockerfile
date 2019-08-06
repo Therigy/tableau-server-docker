@@ -11,12 +11,14 @@ RUN find /etc/systemd/system \
     -not -name '*systemd-user-sessions*' \
     -exec rm \{} \;
 
-RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
-    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" > /etc/apt/sources.list.d/webupd8team-java-trusty.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && \    
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && \    
+#    apt-get update && \
+#    apt-get install -y software-properties-common && \
+#    apt-add-repository ppa:webupd8team/java -y && \
     apt-get update && \
     apt-get install -y \
-    dbus wget oracle-java8-installer oracle-java8-set-default python3 python3-pip \
+    dbus wget openjdk-8-jdk openjdk-8-jre python3 python3-pip \
+#    dbus wget oracle-java8-installer oracle-java8-set-default python3 python3-pip \
     alien at autotools-dev bash-completion bc bsdmainutils ca-certificates-java \
     cpio cron cups-bsd cups-client cups-common debhelper debugedit \
     dh-strip-nondeterminism distro-info-data ed fontconfig fontconfig-config \
@@ -76,7 +78,7 @@ RUN apt-get update && \
     gdebi tableau-postgresql-odbc_9.5.3_amd64.deb && \
     gdebi tableau-freetds_1.00.40_amd64.deb
 
-COPY config/* /opt/tableau/docker_build/
+COPY config/tableau_server_install.service /opt/tableau/docker_build/
 
 RUN cp /opt/tableau/docker_build/tableau_server_install.service /etc/systemd/system/ && \
     sed -i 's/PrivateTmp.*//' /lib/systemd/system/systemd-localed.service && \
@@ -103,6 +105,7 @@ RUN cp /opt/tableau/docker_build/tableau_server_install.service /etc/systemd/sys
     echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale && \
     mv tableau-server-${TABLEAU_VERSION}_amd64.deb tableau-server.deb
 
+COPY config/* /opt/tableau/docker_build/
  
 EXPOSE 80 8850
 
